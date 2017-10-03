@@ -1,0 +1,64 @@
+<?php
+
+$contactForm = $this->form;
+$fullname = $contactForm->get('fullname');
+$hidden = $contactForm->get('hidden_input');
+$age = $contactForm->get('input_number');
+$email = $contactForm->get('my_email');
+$pw = $contactForm->get('my_password');
+$gender = $contactForm->get('gender');
+$mess = $contactForm->get('message');
+$select = $contactForm->get('my_select');
+$file = $contactForm->get('my_file');
+$checkbox = $contactForm->get('my_checkbox');
+$multiple = $contactForm->get('multi_check');
+$color = $contactForm->get('my_color');
+$date = $contactForm->get('date');
+$range = $contactForm->get('my_range');
+$button = $contactForm->get('btnReset');
+$submit = $contactForm->get('btnSubmit');
+$csrf = $contactForm->get('token');
+$captcha = $contactForm->get('captcha_image');
+?>
+
+<div class="row">    
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-md-offset-3">
+        <?php
+        echo $this->form()->openTag($contactForm);
+        echo $this->FormRow($fullname);
+        echo '<br/>';
+        echo $this->FormRow($hidden);
+        echo $this->FormRow($age);
+        echo '<br/>';
+        echo $this->FormRow($email);
+        echo '<br/>';
+        echo $this->FormRow($pw);
+        echo '<br/>';
+        echo $this->FormRow($gender);
+        echo '<br/>';
+        echo $this->FormRow($mess);
+        echo '<br/>';
+        echo $this->FormRow($select);
+        echo '<br/>';
+        echo $this->FormRow($file);
+        echo '<br/>';
+        echo $this->FormRow($checkbox);
+        echo '<br/>';
+        echo $this->FormRow($multiple);
+        echo '<br/>';
+        echo $this->FormRow($color);
+        echo '<br/>';
+        echo $this->FormRow($date);
+        echo '<br/>';
+        echo $this->FormRow($range);
+        echo '<br/>';
+        echo $this->FormRow($csrf);
+        echo $this->FormRow($captcha);
+        echo $this->FormRow($button);
+        echo $this->FormRow($submit);
+
+        echo $this->form()->closeTag($contactForm);
+
+        ?> 
+    </div>    
+</div>

@@ -1,0 +1,52 @@
+<?php
+
+$form = $this->form;
+$fullname = $form->get('fullname');
+$hidden = $form->get('hidden_input');
+$age = $form->get('input_number');
+$email = $form->get('my_email');
+$pw = $form->get('my_password');
+$submit = $form->get('btnSubmit');
+?>
+
+<div class="row">    
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-md-offset-3">
+
+<?php
+    $form->prepare();
+    echo $this->form()->openTag($form);
+
+    // echo $this->formLabel($fullname);
+    // echo $this->formText($fullname);
+
+    // echo $this->formHidden($hidden);
+
+    // echo $this->formLabel($age);
+    // echo $this->formNumber($age);
+
+    // echo $this->formLabel($email);
+    // echo $this->formEmail($email);
+
+    // echo $this->formLabel($pw);
+    // echo $this->formPassword($pw);
+
+    echo $this->formLabel($fullname);
+    echo $this->formElement($fullname);
+
+    echo $this->formLabel($age);
+    echo $this->formElement($age);
+
+    echo $this->formLabel($email);
+    echo $this->formElement($email);
+
+    echo $this->formLabel($pw);
+    echo $this->formElement($pw);
+    echo '<br>';
+    echo $this->formElement($submit);
+    echo "\n";
+    echo $this->formButton()->render($submit,'Login');
+
+    echo $this->form()->closeTag($form);
+?> 
+    </div>
+</div> 
