@@ -52,6 +52,19 @@ return [
                         'action' => '[a-zA-Z0-9_-]*'
                     ]
                 ],
+            ],
+            'input-filter'=>[
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/login[/:action]',
+                    'defaults' => [
+                        'controller' => Controller\InputFilterController::class,
+                        'action'     => 'index',
+                    ],
+                    'constraints'=>[
+                        'action' => '[a-zA-Z0-9_-]*'
+                    ]
+                ],
             ]
         ],
     ],
@@ -59,7 +72,8 @@ return [
         'factories' => [
             Controller\FormElementController::class => InvokableFactory::class,
             Controller\ValidatorController::class => InvokableFactory::class,
-            Controller\ValidatorChainController::class => InvokableFactory::class
+            Controller\ValidatorChainController::class => InvokableFactory::class,
+            Controller\InputFilterController::class=>InvokableFactory::class
         ],
     ],
     'view_manager' => [
