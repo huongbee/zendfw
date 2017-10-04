@@ -18,6 +18,7 @@
         "zfcampus/zf-development-mode": "^3.0",
         "zendframework/zend-db": "^2.8.1",
         "zendframework/zend-json": "^3.0",
+        "zendframework/zend-inputfilter": "^2.7",
         "zendframework/zend-mvc-i18n": "^1.0",
         "zendframework/zend-mvc-plugins": "^1.0.1",
         "zendframework/zend-psr7bridge": "^0.2.2",
@@ -26,8 +27,7 @@
         "zendframework/zend-form": "^2.10",
         "zendframework/zend-crypt": "^3.2",
         "zendframework/zend-captcha": "^2.7",
-        "zendframework/zend-validator": "^2.10",
-        "zendframework/zend-inputfilter": "^2.7"
+        "zendframework/zend-validator": "^2.10"
     },
     "autoload": {
         "psr-4": {
