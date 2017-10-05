@@ -16,7 +16,7 @@
         "zendframework/zend-component-installer": "^1.0 || ^0.7 || ^1.0.0-dev@dev",
         "zendframework/zend-mvc": "^3.0.1",
         "zfcampus/zf-development-mode": "^3.0",
-        "zendframework/zend-db": "^2.8.1",
+        "zendframework/zend-db": "^2.8",
         "zendframework/zend-json": "^3.0",
         "zendframework/zend-inputfilter": "^2.7",
         "zendframework/zend-mvc-i18n": "^1.0",
@@ -34,7 +34,8 @@
         "psr-4": {
             "Application\\": "module/Application/src/",
             "Started\\": "module/Started/src/",
-            "Form\\": "module/Form/src/"
+            "Form\\": "module/Form/src/",
+            "Database\\": "module/Database/src/"
         }
     },
     "autoload-dev": {

@@ -25,5 +25,6 @@ return [
     'ZendDeveloperTools',
     'Application',
     'Started',
-    'Form'
+    'Form',
+    'Database'
 ];
