@@ -1,5 +1,5 @@
 <?php
-$title = 'Upload File';
+$title = 'Upload Multiple File';
 $this->headTitle($title);
 
 $form = $this->form;
@@ -7,7 +7,7 @@ $form->setAttributes([
     'enctype'=>'multipart/form-data',
     'action' => $this->url('file',[
         'controller'=>'Controller\UploadfileController',
-        'action'=>'index'
+        'action'=>'uploadMultiple'
     ]),
     'method'=>'POST'
 ]);
