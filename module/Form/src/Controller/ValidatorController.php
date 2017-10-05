@@ -459,6 +459,22 @@ class ValidatorController extends AbstractActionController{
         return false;
     }
 
+    //check Password vs passwordConfirm
+    public function checkConfirmPasswordAction(){
+        $validator = new \Zend\Validator\ConfirmPassword();
+        $password = "123456@#$";
+        //$confirmPassword = "123456";
+        $confirmPassword = "123456@#$";
+        $validator->setConfirmPassword($confirmPassword);
+        if($validator->isValid($password)){
+            echo 'Mật khẩu giống nhau';
+        }
+        else{
+            $messages = $validator->getMessages();
+            echo current($messages);
+        }
+        return false;
+    }
 
     
 }

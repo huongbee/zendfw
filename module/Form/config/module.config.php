@@ -65,6 +65,19 @@ return [
                         'action' => '[a-zA-Z0-9_-]*'
                     ]
                 ],
+            ],
+            'file'=>[
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/upload-file[/:action]',
+                    'defaults' => [
+                        'controller' => Controller\UploadfileController::class,
+                        'action'     => 'index',
+                    ],
+                    'constraints'=>[
+                        'action' => '[a-zA-Z0-9_-]*'
+                    ]
+                ],
             ]
         ],
     ],
@@ -73,7 +86,8 @@ return [
             Controller\FormElementController::class => InvokableFactory::class,
             Controller\ValidatorController::class => InvokableFactory::class,
             Controller\ValidatorChainController::class => InvokableFactory::class,
-            Controller\InputFilterController::class=>InvokableFactory::class
+            Controller\InputFilterController::class=>InvokableFactory::class,
+            Controller\UploadfileController::class=>InvokableFactory::class
         ],
     ],
     'view_manager' => [

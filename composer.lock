@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "15c3184cdb024f379d16e33baab62236",
+    "content-hash": "e3b0aafa76615697ca1869b77877f119",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -764,6 +764,63 @@
                 "zf2"
             ],
             "time": "2017-07-11T19:17:22+00:00"
+        },
+        {
+            "name": "zendframework/zend-file",
+            "version": "2.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-file.git",
+                "reference": "888fd4852432ee61ffd48a66b6812387b4f83c02"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-file/zipball/888fd4852432ee61ffd48a66b6812387b4f83c02",
+                "reference": "888fd4852432ee61ffd48a66b6812387b4f83c02",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5 || ^7.0",
+                "zendframework/zend-stdlib": "^2.7 || ^3.0"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "1.7.*",
+                "phpunit/phpunit": "~4.0",
+                "zendframework/zend-coding-standard": "~1.0.0",
+                "zendframework/zend-filter": "^2.6.1",
+                "zendframework/zend-i18n": "^2.6",
+                "zendframework/zend-progressbar": "^2.5.2",
+                "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3",
+                "zendframework/zend-session": "^2.6.2",
+                "zendframework/zend-validator": "^2.6"
+            },
+            "suggest": {
+                "zendframework/zend-filter": "Zend\\Filter component",
+                "zendframework/zend-i18n": "Zend\\I18n component",
+                "zendframework/zend-validator": "Zend\\Validator component"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev",
+                    "dev-develop": "2.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zend\\File\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "homepage": "https://github.com/zendframework/zend-file",
+            "keywords": [
+                "file",
+                "zf2"
+            ],
+            "time": "2017-01-11T17:07:45+00:00"
         },
         {
             "name": "zendframework/zend-filter",
