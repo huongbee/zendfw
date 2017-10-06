@@ -17,22 +17,44 @@ return [
             'database' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/adapter[/:action]',
+                    'route'    => '/database',
                     'defaults' => [
-                        'controller' => Controller\AdapterController::class,
+                        '__NAMESPACE__'=>'Database\Controller',
+                        'controller' => 'Adapter',
                         'action'     => 'index',
                     ],
                     'constraints'=>[
                         'action' => '[a-zA-Z0-9_-]*'
                     ]
                 ],
+                'may_terminate'=>true,
+                'child_routes'=>[
+                    'sub'=>[
+                        'type'=>Segment::class,
+                        'options'=>[
+                            'route'=>'/[:controller[/:action]]',
+                            'constrains'=>[
+                                'controller'=>'[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'=>'[a-zA-Z][a-zA-Z0-9_-]*'
+                            ]
+                        ]
+                    ]
+                ]
             ]
         ],
     ],
     'controllers' => [
-        'factories' => [
-            Controller\AdapterController::class=>InvokableFactory::class
+        // 'factories' => [
+        //     Controller\AdapterController::class=>InvokableFactory::class
+        // ],
+        'invokables'=>[
+            'Controller\AdapterController'=>\Database\Controller\AdapterController::class,
+            'Controller\SqlController'=>\Database\Controller\SqlController::class
         ],
+        'aliases'=>[
+            'Adapter'=>'Controller\AdapterController',
+            'Sql' => 'Controller\SqlController'
+        ]
     ],
     'view_manager' => [
         

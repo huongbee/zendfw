@@ -28,7 +28,8 @@
         "zendframework/zend-crypt": "^3.2",
         "zendframework/zend-captcha": "^2.7",
         "zendframework/zend-validator": "^2.10",
-        "zendframework/zend-file": "^2.7"
+        "zendframework/zend-file": "^2.7",
+        "zendframework/zend-loader": "^2.5"
     },
     "autoload": {
         "psr-4": {

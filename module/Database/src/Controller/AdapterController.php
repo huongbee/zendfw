@@ -150,9 +150,7 @@ class AdapterController extends AbstractActionController{
             'image' => 'demo.png'
         ];
         $result = $statement->execute($parameters);
-        echo '<pre>';
         print_r($result);
-        echo '</pre>';
         return false;
     }
 }
