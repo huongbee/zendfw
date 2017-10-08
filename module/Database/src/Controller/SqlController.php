@@ -4,6 +4,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Sql;
+use Zend\Db\Sql\Where;
 
 class SqlController extends AbstractActionController{
 
@@ -97,6 +98,62 @@ class SqlController extends AbstractActionController{
 
         return false;
     }
+
+    //where()
+    public function select04Action(){
+        $adapter = $this->AdapterDB();
+
+        $sql = new Sql($adapter);
+        $select = $sql->select();
+        $select->from(['f'=>'foods']);
+        
+        // $select->where(function (Where $where) {
+        //     $where->like('name', '%súp%');
+        // });
+        //$select->where('id_type=2');
+        $select->where(['id_type=2','price<=50000']);
+
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $results = $statement->execute();
+
+        foreach($results as $data){
+            echo '<pre>';
+            print_r($data);
+            echo '</pre>';
+        }
+
+        return false;
+    }
+
+
+    public function select05Action(){
+        $adapter = $this->AdapterDB();
+
+        $sql = new Sql($adapter);
+        $select = $sql->select();
+        $select->from(['f'=>'foods']);
+        
+        //$select->where(new \Zend\Db\Sql\Predicate\In('id',[1,2,3]));
+        //NotIn
+        //$select->where(new \Zend\Db\Sql\Predicate\Between('id',5,9));
+        //$select->where(new \Zend\Db\Sql\Predicate\NotBetween('id',5,9));
+        //$select->where(new \Zend\Db\Sql\Predicate\Expression("id = ? OR id = ?",[2,10]));
+        //$select->where(new \Zend\Db\Sql\Predicate\Literal('id_type > 8'));
+        //$select->where(new \Zend\Db\Sql\Predicate\Like('name', '%súp%'));
+        $select->where(new \Zend\Db\Sql\Predicate\NotLike('name', '%súp%'));
+
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $results = $statement->execute();
+
+        foreach($results as $data){
+            echo '<pre>';
+            print_r($data);
+            echo '</pre>';
+        }
+
+        return false;
+    }
+
 
 
 }
