@@ -5,6 +5,7 @@ use Zend\View\Model\ViewModel;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Where;
+use Zend\Db\Sql\Predicate\Expression;
 
 class SqlController extends AbstractActionController{
 
@@ -154,6 +155,197 @@ class SqlController extends AbstractActionController{
         return false;
     }
 
+    //order(), limit(), offset()
+    public function select06Action(){
+        $adapter = $this->AdapterDB();
+
+        $sql = new Sql($adapter);
+        $select = $sql->select();
+        $select->from(['f'=>'foods']);
+        //$select->order('id DESC');
+        $select->order('price ASC, id DESC'); 
+        $select->limit(5)->offset(2);
+
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $results = $statement->execute();
+
+        foreach($results as $data){
+            echo '<pre>';
+            print_r($data);
+            echo '</pre>';
+        }
+
+        return false;
+    }
+
+
+    //group(), having()
+    //Tính tổng số món ăn của mỗi loại, liệt kê mã loại, và tên loại
+    //SELECT t.id as maloai, t.name as tenloai, count(f.id) as tongsoSP
+    //FROM food_type t
+    //LEFT JOIN foods f ON t.id = f.id_type
+    //GROUP BY (t.id,t.name)
+
+    //chỉ lấy các loại có số lượng món > 5
+    //HAVING(tongsoSP>5)
+
+    public function select07Action(){
+        $adapter = $this->AdapterDB();
+
+        $sql = new Sql($adapter);
+        $select = $sql->select();
+        $select->columns([
+            'maloai'=>'id',
+            'tenloai'=>'name',
+            'tongsoSP'=>  new \Zend\Db\Sql\Predicate\Expression("count(f.id)")
+        ]);
+        $select->from(['t'=>'food_type']);
+        $select->join(
+            ['f'=>'foods'],
+            'f.id_type=t.id',
+            [],
+            $select::JOIN_LEFT
+        );
+        $select->group(['t.id','t.name']);
+        $select->having('tongsoSP > 5');
+
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $results = $statement->execute();
+
+        foreach($results as $data){
+            echo '<pre>';
+            print_r($data);
+            echo '</pre>';
+        }
+        return false;
+    }
+
+
+    //tìm đơn giá trung bình, min, max theo loại
+    
+    public function select08Action(){
+        $adapter = $this->AdapterDB();
+
+        $sql = new Sql($adapter);
+        $select = $sql->select();
+        $select->columns([
+            'maloai'=>'id',
+            'tenloai'=>'name',
+            'tenloaiFormatUpper'=>  new \Zend\Db\Sql\Predicate\Expression("UPPER(t.name)"),
+            'tenloaiFormatLower'=>  new \Zend\Db\Sql\Predicate\Expression("LOWER(t.name)"),
+            'tongsoSP'=>  new \Zend\Db\Sql\Predicate\Expression("count(f.id)"),
+            'tongDongia'=>  new \Zend\Db\Sql\Predicate\Expression("sum(f.price)"),
+            'dongiaTB_basic'=>  new \Zend\Db\Sql\Predicate\Expression("sum(f.price)/count(f.id)"),
+            'dongiaTB'=>  new \Zend\Db\Sql\Predicate\Expression("avg(f.price)"),
+            'min'=>  new \Zend\Db\Sql\Predicate\Expression("min(f.price)"),
+            'max'=>  new \Zend\Db\Sql\Predicate\Expression("max(f.price)"),
+            'concatIdName' => new \Zend\Db\Sql\Predicate\Expression("concat(t.id, ' - ' ,t.name)"),
+            'listFoods' => new \Zend\Db\Sql\Predicate\Expression("group_concat(f.name SEPARATOR '; ')"),
+        ]);
+        $select->from(['t'=>'food_type']);
+        $select->join(
+            ['f'=>'foods'],
+            'f.id_type=t.id',
+            [],
+            $select::JOIN_LEFT
+        );
+        $select->group(['t.id','t.name']);
+
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $results = $statement->execute();
+
+        foreach($results as $data){
+            echo '<pre>';
+            print_r($data);
+            echo '</pre>';
+        }
+        return false;
+    }
+
+
+    //multijoin
+    //SELECT `f`.* FROM `foods` AS `f` LEFT JOIN `menu_detail` AS `md` ON `md`.`id_food`=`f`.`id` LEFT JOIN `menu` AS `m` ON `m`.`id`=`md`.`id_menu` WHERE m.id=2
+    public function select09Action(){
+        $adapter = $this->AdapterDB();
+
+        $sql = new Sql($adapter);
+        $select = $sql->select();
+        $select->from(['f'=>'foods']);
+        $select->join(['md'=>'menu_detail'],'md.id_food=f.id',[],$select::JOIN_LEFT)
+            ->join(['m'=>'menu'],'m.id=md.id_menu',[],$select::JOIN_LEFT);
+        $select->where('m.id=2');
+
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $results = $statement->execute();
+
+        $sqlString = $sql->getSqlStringForSqlObject($select);
+        echo '<pre>';
+        echo $sqlString;
+        echo '</pre>';
+        foreach($results as $data){
+            echo '<pre>';
+            print_r($data);
+            echo '</pre>';
+        }
+        return false;
+    }
+
+    //insert
+    public function insertAction(){
+        $adapter = $this->AdapterDB();
+        $sql = new Sql($adapter);
+
+        $insert = $sql->insert('customers');
+        $insert->values([
+            'name'=>'Khoa Phạm Training',
+            'gender'=>'nam',
+            'email'=>'kpt@gmail.com',
+            'address'=>'90-92 Lê Thị Riêng',
+            'phone' => '012312312',
+            'note'=>'Zend FW 3'
+        ]);
+        $statement = $sql->prepareStatementForSqlObject($insert);
+        $results = $statement->execute();
+        echo $sqlString = $sql->getSqlStringForSqlObject($insert);
+        echo "<br>";
+        echo 'Inserted';
+        return false;
+    }
+    
+    //update
+    public function updateAction(){
+        $adapter = $this->AdapterDB();
+        $sql = new Sql($adapter);
+
+        $update = $sql->update('customers');
+        $update->set([
+            'phone'=>'0920145687',
+            'address'=>'Phường Bến Nghé, Quận 1'
+        ]);
+        $update->where('id=12');
+        $statement = $sql->prepareStatementForSqlObject($update);
+        $results = $statement->execute();
+        echo $sqlString = $sql->getSqlStringForSqlObject($update);
+        echo "<br>";
+        echo 'Updated';
+        return false;
+    }
+
+    //delete
+    public function deleteAction(){
+        $adapter = $this->AdapterDB();
+        $sql = new Sql($adapter);
+
+        $delete = $sql->delete('customers');
+        $delete->where('id=21');
+
+        $statement = $sql->prepareStatementForSqlObject($delete);
+        $results = $statement->execute();
+        echo $sqlString = $sql->getSqlStringForSqlObject($delete);
+        echo "<br>";
+        echo 'Deleted';
+        return false;
+    }
 
 
 }

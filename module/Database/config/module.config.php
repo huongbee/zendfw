@@ -49,11 +49,13 @@ return [
         // ],
         'invokables'=>[
             'Controller\AdapterController'=>\Database\Controller\AdapterController::class,
-            'Controller\SqlController'=>\Database\Controller\SqlController::class
+            'Controller\SqlController'=>\Database\Controller\SqlController::class,
+            'Controller\DdlController'=>\Database\Controller\DdlController::class
         ],
         'aliases'=>[
             'Adapter'=>'Controller\AdapterController',
-            'Sql' => 'Controller\SqlController'
+            'Sql' => 'Controller\SqlController',
+            'Ddl' => 'Controller\DdlController'
         ]
     ],
     'view_manager' => [
