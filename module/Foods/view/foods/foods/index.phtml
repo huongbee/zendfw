@@ -1,0 +1,42 @@
+<?php
+$title = "Danh sách món ăn";
+$this->headTitle($title);
+?>
+<div class="container">
+    <h1><?=$this->escapeHtml($title)?></h1>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Mã món</th>
+                <th>Tên món</th>
+                <th>Mã loại</th>
+                <th style="width:30%">Mô tả ngắn</th>
+                <th>Đơn giá</th>
+                <th>Khuyến mãi</th>
+                <th>Hình ảnh</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php 
+        $stt = 1;
+        foreach($foods as $food):
+        ?>
+            <tr>
+                <td><?=$stt?></td>
+                <td><?=$this->escapeHtml($food->id)?></td>
+                <td><?=$this->escapeHtml($food->name)?></td>
+                <td><?=$this->escapeHtml($food->id_type)?></td>
+                <td style="width:30%"><?=$this->escapeHtml($food->summary)?></td>
+                <td><?=$this->escapeHtml($food->price)?></td>
+                <td><?=$this->escapeHtml($food->promotion)?></td>
+                <td><?=$this->escapeHtml($food->image)?></td>
+            </tr>
+        <?php 
+        $stt++;
+        endforeach ?>
+        </tbody>
+    </table>
+</div>
+

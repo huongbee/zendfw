@@ -3,6 +3,7 @@ namespace Foods\Controller;
 
 use Foods\Model\FoodsTable;
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
 
 class FoodsController extends AbstractActionController{
 
@@ -10,16 +11,37 @@ class FoodsController extends AbstractActionController{
     public function __construct(FoodsTable $table){
         $this->table = $table;
     }
+
     public function indexAction(){
         $foods = $this->table->fetchAll();
-        foreach($foods as $food){
-            echo "<pre>";
-            print_r($food);
-            echo "</pre>";
-        }
-        
+        return new ViewModel(['foods'=>$foods]);
+    }
+
+    public function getTableNameAction(){
+        $name = $this->table->getTableName();
+        echo $name;
         return false;
     }
+    public function selectDataAction(){
+        $data = $this->table->selectData();
+        foreach($data as $row){
+            echo "<pre>";
+            print_r($row);
+            echo "</pre>";
+        }
+        return false;
+    }
+    public function selectData02Action(){
+        $data = $this->table->selectData02();
+        foreach($data as $row){
+            echo "<pre>";
+            print_r($row);
+            echo "</pre>";
+        }
+        return false;
+    }
+
+
 
     public function addAction(){
         
