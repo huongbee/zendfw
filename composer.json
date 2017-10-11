@@ -36,7 +36,8 @@
             "Application\\": "module/Application/src/",
             "Started\\": "module/Started/src/",
             "Form\\": "module/Form/src/",
-            "Database\\": "module/Database/src/"
+            "Database\\": "module/Database/src/",
+            "Foods\\": "module/Foods/src/"
         }
     },
     "autoload-dev": {
