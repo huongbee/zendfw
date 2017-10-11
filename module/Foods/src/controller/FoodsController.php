@@ -14,6 +14,7 @@ class FoodsController extends AbstractActionController{
 
     public function indexAction(){
         $foods = $this->table->fetchAll();
+       
         return new ViewModel(['foods'=>$foods]);
     }
 

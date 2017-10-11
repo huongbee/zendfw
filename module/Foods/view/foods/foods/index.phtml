@@ -9,9 +9,8 @@ $this->headTitle($title);
         <thead>
             <tr>
                 <th>STT</th>
-                <th>Mã món</th>
                 <th>Tên món</th>
-                <th>Mã loại</th>
+                <th>Tên loại</th>
                 <th style="width:30%">Mô tả ngắn</th>
                 <th>Đơn giá</th>
                 <th>Khuyến mãi</th>
@@ -25,13 +24,14 @@ $this->headTitle($title);
         ?>
             <tr>
                 <td><?=$stt?></td>
-                <td><?=$this->escapeHtml($food->id)?></td>
                 <td><?=$this->escapeHtml($food->name)?></td>
-                <td><?=$this->escapeHtml($food->id_type)?></td>
+                <td><?=$this->escapeHtml($food->name_type)?></td>
                 <td style="width:30%"><?=$this->escapeHtml($food->summary)?></td>
                 <td><?=$this->escapeHtml($food->price)?></td>
                 <td><?=$this->escapeHtml($food->promotion)?></td>
-                <td><?=$this->escapeHtml($food->image)?></td>
+                <td>
+                <img src="img/hinh_mon_an/<?=$this->escapeHtml($food->image)?>" alt="<?=$this->escapeHtml($food->name)?>" width="120px">
+                </td>
             </tr>
         <?php 
         $stt++;

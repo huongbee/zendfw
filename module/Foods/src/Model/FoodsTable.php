@@ -17,7 +17,18 @@ class FoodsTable
     //select()
     public function fetchAll()
     {
-        return $this->tableGateway->select();
+        //return $this->tableGateway->select();
+        $adapter = $this->tableGateway->getAdapter();
+        
+        $sql = new Sql($adapter);
+        $select = $sql->select();
+        $select->from(['f'=>'foods']);
+        $select->columns(['name','summary','price','promotion','image']);
+        $select->join(['ft'=>'food_type'],'f.id_type = ft.id',['name_type'=>'name'],$select::JOIN_LEFT);
+        $select->order('name_type ASC');
+        $selectString = $sql->buildSqlString($select);
+        $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $results;
     }
 
     //getTable()
@@ -57,5 +68,7 @@ class FoodsTable
         $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $results;
     }
+
+    
 
 }
