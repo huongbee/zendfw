@@ -4,6 +4,7 @@ namespace Foods\Controller;
 use Foods\Model\FoodsTable;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Foods\Form\FoodsForm;
 
 class FoodsController extends AbstractActionController{
 
@@ -45,7 +46,8 @@ class FoodsController extends AbstractActionController{
 
 
     public function addAction(){
-        
+        $form = new FoodsForm();
+        return new ViewModel(['form'=>$form]);
     }
 
     public function editAction(){

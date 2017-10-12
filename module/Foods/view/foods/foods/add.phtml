@@ -1,0 +1,105 @@
+<?php
+$title = "Thêm Món Ăn";
+$this->headTitle($title);
+$form->prepare();
+?>
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+    <h2><?=$this->escapeHtml($title)?></h2>
+        <?=$this->form()->openTag($form)?>
+        <div class="form-group">
+        <?=$this->formLabel($form->get('name'));?>
+            <div class="col-md-9">
+                <?php
+                echo $this->formElement($form->get('name'));
+                echo $this->formElementErrors($form->get('name'));
+                ?>
+            </div>
+        </div>
+
+        <div class="form-group">
+        <?=$this->formLabel($form->get('id_type'));?>
+            <div class="col-md-9">
+                <?php
+                echo $this->formElement($form->get('id_type'));
+                echo $this->formElementErrors($form->get('id_type'));
+                ?>
+            </div>
+        </div>
+
+        <div class="form-group">
+        <?=$this->formLabel($form->get('summary'));?>
+            <div class="col-md-9">
+                <?php
+                echo $this->formElement($form->get('summary'));
+                echo $this->formElementErrors($form->get('summary'));
+                ?>
+            </div>
+        </div>
+
+        <div class="form-group">
+        <?=$this->formLabel($form->get('detail'));?>
+            <div class="col-md-9">
+                <?php
+                echo $this->formElement($form->get('detail'));
+                echo $this->formElementErrors($form->get('detail'));
+                ?>
+            </div>
+        </div>
+
+        <div class="form-group">
+        <?=$this->formLabel($form->get('price'));?>
+            <div class="col-md-9">
+                <?php
+                echo $this->formElement($form->get('price'));
+                echo $this->formElementErrors($form->get('price'));
+                ?>
+            </div>
+        </div>
+
+        <div class="form-group">
+        <?=$this->formLabel($form->get('promotion'));?>
+            <div class="col-md-9">
+                <?php
+                echo $this->formElement($form->get('promotion'));
+                echo $this->formElementErrors($form->get('promotion'));
+                ?>
+            </div>
+        </div>
+
+        <div class="form-group">
+        <?=$this->formLabel($form->get('image'));?>
+            <div class="col-md-9">
+                <?php
+                echo $this->formElement($form->get('image'));
+                echo $this->formElementErrors($form->get('image'));
+                ?>
+            </div>
+        </div>
+        <div class="form-group">
+        <?=$this->formLabel($form->get('unit'));?>
+            <div class="col-md-9">
+                <?php
+                echo $this->formElement($form->get('unit'));
+                echo $this->formElementErrors($form->get('unit'));
+                ?>
+            </div>
+        </div>
+        <div class="form-group">
+        <?=$this->formLabel($form->get('today'));?>
+            <div class="col-md-9">
+                <?php
+                echo $this->formElement($form->get('today'));
+                echo $this->formElementErrors($form->get('today'));
+                ?>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 col-md-offset-10">
+                <?=$this->formElement($form->get('btnSubmit'));?>
+            </div>
+        </div>
+        <?=$this->form()->closeTag()?>
+    </div>
+</div>
