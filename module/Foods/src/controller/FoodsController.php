@@ -47,6 +47,15 @@ class FoodsController extends AbstractActionController{
 
     public function addAction(){
         $form = new FoodsForm();
+
+        $typeFoods = $this->table->getTypeFoods();
+        $listTypes = [];
+        foreach($typeFoods as $type){
+            $listTypes[$type->id] = $type->name;
+        }
+        //print_r($listTypes); die;
+        $form->get('id_type')->setValueOptions($listTypes);
+        
         return new ViewModel(['form'=>$form]);
     }
 
