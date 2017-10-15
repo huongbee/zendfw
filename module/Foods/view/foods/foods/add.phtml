@@ -7,6 +7,7 @@ $form->prepare();
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
     <h2><?=$this->escapeHtml($title)?></h2>
+        <?php //$this->flashMessenger()->render('error',['alert','alert-danger'])?>
         <?=$this->form()->openTag($form)?>
         <div class="form-group">
         <?=$this->formLabel($form->get('name'));?>

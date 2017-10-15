@@ -7,6 +7,7 @@ use Zend\Stdlib\ArrayUtils;
  * This makes our life easier when dealing with paths. Everything is relative
  * to the application root now.
  */
+date_default_timezone_set('Asia/Ho_Chi_Minh');
 chdir(dirname(__DIR__));
 
 // Decline static file requests back to the PHP built-in webserver
@@ -39,6 +40,7 @@ if (file_exists(__DIR__ . '/../config/development.config.php')) {
 define('APPLICATION_PATH',dirname(__DIR__));
 
 define('FILES_PATH',APPLICATION_PATH.'/public/files/');
+define('IMAGE_PATH',APPLICATION_PATH.'/public/img/');
 //echo FILES_PATH;
 // Run the application!
 Application::init($appConfig)->run();

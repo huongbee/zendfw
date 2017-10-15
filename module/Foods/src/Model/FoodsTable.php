@@ -23,7 +23,7 @@ class FoodsTable
         $sql = new Sql($adapter);
         $select = $sql->select();
         $select->from(['f'=>'foods']);
-        $select->columns(['name','summary','price','promotion','image']);
+        $select->columns(['id','name','summary','price','promotion','image']);
         $select->join(['ft'=>'food_type'],'f.id_type = ft.id',['name_type'=>'name'],$select::JOIN_LEFT);
         $select->order('name_type ASC');
         $selectString = $sql->buildSqlString($select);
@@ -80,6 +80,30 @@ class FoodsTable
         return $results;
     }
 
-    
+    public function saveFoods(Foods $foods){
+        $data = [
+            'id_type'=>$foods->id_type,
+            'name'=>$foods->name,
+            'summary'=>$foods->summary,
+            'detail'=> $foods->detail,
+            'price'=>$foods->price,
+            'promotion'=>$foods->promotion,
+            'image'=>$foods->image,
+            'update_at'=>$foods->update_at,
+            'unit'=>$foods->unit,
+            'today'=>$foods->today,
+        ];
+        $this->tableGateway->insert($data);
+        return;
+    }
 
+    public function findFoods($id){
+        $id = (int)$id;
+        $foods = $this->tableGateway->select(['id'=>$id]);
+        $foods = $foods->current();
+        if(!$foods){
+            throw new RuntimeException("Không tìm thầy món ăn có id là: $id");
+        }
+        return $foods;
+    }
 }

@@ -1,8 +1,14 @@
 <?php
 namespace Foods\Form;
 use Zend\Form\Form;
-use Zend\InputFilter\InputFiler;
+use Zend\InputFilter\InputFilter;
 use Zend\Form\Element;
+use Zend\Validator\NotEmpty;
+use Zend\Validator\Digits;
+use Zend\InputFilter\FileInput;
+use Zend\Validator\File\Size;
+use Zend\Validator\File\MimeType;
+use Zend\Validator\StringLength;
 
 class FoodsForm extends Form{
 
@@ -15,6 +21,7 @@ class FoodsForm extends Form{
             'enctype'=>'multipart/form-data'
         ]);
         $this->setElements();
+        $this->validatorForm();
     }
 
     private function setElements(){
@@ -93,7 +100,8 @@ class FoodsForm extends Form{
                     'class' => 'col-md-3 control-label'
                 ]);
         $promotion->setAttributes([
-            'class' => 'form-control'
+            'class' => 'form-control',
+            'multiple'=>true
         ])
         ->setValueOptions([
             'nước ngọt'=>'Nước ngọt',
@@ -107,6 +115,10 @@ class FoodsForm extends Form{
             ->setLabelAttributes([
                 'class'=>"col-md-3 control-label"
             ]);
+        $image->setAttributes([
+            'required'=>"required",
+            'type'=>'file'
+        ]);
         $this->add($image);
 
         //unit
@@ -145,6 +157,108 @@ class FoodsForm extends Form{
                 'value' => 'Save'
             ],
            
+        ]);
+    }
+
+    private function validatorForm(){
+        $inputFilter = new InputFilter();
+        $this->setInputFilter($inputFilter);
+
+        $inputFilter->add([
+            'name'=>'name',
+            'required'=>true,
+            'filters'=>[
+                ['name'=>'StringTrim'],
+                ['name'=>'StripTags']
+            ],
+            'validators'=>[
+                [
+                    'name'=>'NotEmpty',
+                    'break_chain_on_failure'=>true,
+                    'options'=>[
+                        'messages'=>[
+                            NotEmpty::IS_EMPTY => "Vui lòng nhập tên món"
+                        ]
+                    ]
+                ],
+                [
+                    'name'=>'StringLength',
+                    'options'=>[
+                        'max'=>150,
+                        'messages'=>[
+                            StringLength::TOO_LONG=>'Tên món ăn không quá %max% kí tự'
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+        $inputFilter->add([
+            'name'=>'price',
+            'required'=>true,
+            'filters'=>[
+                ['name'=>'StringTrim']
+            ],
+            'validators'=>[
+                [
+                    'name'=>'NotEmpty',
+                    'break_chain_on_failure'=>true,
+                    'options'=>[
+                        'messages'=>[
+                            NotEmpty::IS_EMPTY => "Vui lòng nhập đơn giá"
+                        ]
+                    ]
+                ],
+                [
+                    'name'=>'Digits',
+                    'options'=>[
+                        'messages'=>[
+                            Digits::NOT_DIGITS=>'Vui lòng nhập số'
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+
+        $inputFilter->add([
+            'name'=>'image',
+            'required'=>true,
+            'filters'=>[
+                ['name'=>'StringTrim']
+            ],
+            'validators'=>[
+                [
+                    'name'=>'NotEmpty',
+                    'options'=>[
+                        'break_chain_on_failure'=>true,
+                        'messages'=>[
+                            NotEmpty::IS_EMPTY => "Vui lòng chọn ảnh"
+                        ]
+                    ]
+                ],
+                [
+                    'name'=>'filesize',
+                    'options'=>[
+                        'min'=>200*1024,
+                        'max'=>2*1024*1024,
+                        'break_chain_on_failure'=>true,
+                        'messages'=>[
+                            Size::TOO_SMALL=>'File quá nhỏ, dung lượng ít nhất %min%',
+                            Size::TOO_BIG=>'File quá lớn, dung lượng tối đa %max%'
+                        ]
+                    ]
+                ],
+                [
+                    'name'=>'fileMimeType',
+                    'options'=>[
+                        'mimeType'=>'image/png, image/jpeg, image/jpg, image/gif',
+                        'messages'=>[
+                            MimeType::FALSE_TYPE=>'Kiểu file %type% không được phép chọn',
+                            MimeType::NOT_DETECTED=>'MimeType không xác định',
+                            MimeType::NOT_READABLE => 'MineType không thể đọc'
+                        ]
+                    ]
+                ]
+            ]
         ]);
     }
 }

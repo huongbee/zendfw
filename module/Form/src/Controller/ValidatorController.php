@@ -110,9 +110,9 @@ class ValidatorController extends AbstractActionController{
     public function digitsAction(){
         $validator = new \Zend\Validator\Digits();
         $num = 1; //true
-        $num = 1.1; //tfalse
-        $num = '5'; //true
-        $num = 'cbs2'; //
+        $num = 1.1; //false
+        // $num = '5'; //true
+        // $num = 'cbs2'; //false
         if($validator->isValid($num)){
             echo 'thỏa mãn';
         }

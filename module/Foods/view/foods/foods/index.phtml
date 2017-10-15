@@ -3,8 +3,13 @@ $title = "Danh sách món ăn";
 $this->headTitle($title);
 ?>
 <div class="container">
-    <h1><?=$this->escapeHtml($title)?></h1>
-
+    <h1><?=$this->escapeHtml($title)?> </h1><a href="<?=$this->url('foods',['controller'=>'FoodsController','action'=>'add'])?>"><button class="btn btn-primary">Thêm mới</button></a>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+        <?= $this->flashMessenger()->render('success', ['alert', 'alert-success']); ?>
+        </div>
+        
+    </div>
     <table class="table table-hover">
         <thead>
             <tr>
@@ -15,6 +20,7 @@ $this->headTitle($title);
                 <th>Đơn giá</th>
                 <th>Khuyến mãi</th>
                 <th>Hình ảnh</th>
+                <th>Options</th>
             </tr>
         </thead>
         <tbody>
@@ -31,6 +37,14 @@ $this->headTitle($title);
                 <td><?=$this->escapeHtml($food->promotion)?></td>
                 <td>
                 <img src="img/hinh_mon_an/<?=$this->escapeHtml($food->image)?>" alt="<?=$this->escapeHtml($food->name)?>" width="120px">
+                </td>
+                <td>
+                    <a href="<?=$this->url('foods',
+                                            [
+                                                'controller'=>'FoodsController',
+                                                'action'=>'edit',
+                                                'id'=>$food->id
+                                            ])?>">Edit</a>
                 </td>
             </tr>
         <?php 
