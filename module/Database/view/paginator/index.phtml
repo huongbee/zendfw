@@ -1,0 +1,23 @@
+
+<h2><?=$this->escapeHtml('Paginator')?></h2>
+<?php if (count($this->paginator)): ?>
+<table class="table table-bordered">
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+    </tr>
+<?php foreach ($this->paginator as $item): ?>
+    <tr>
+        <td><?=$item['name']?></td>
+        <td><?=$item['price']?></td>
+    </tr>
+<?php endforeach; ?>
+</table>
+<?php endif; ?>
+
+<?= $this->paginationControl(
+    $this->paginator,
+    'Sliding',
+    'bootstrap_paginator',
+    ['route' => 'paginator']
+) ?>

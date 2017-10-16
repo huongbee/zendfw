@@ -29,7 +29,8 @@
         "zendframework/zend-captcha": "^2.7",
         "zendframework/zend-validator": "^2.10",
         "zendframework/zend-file": "^2.7",
-        "zendframework/zend-loader": "^2.5"
+        "zendframework/zend-loader": "^2.5",
+        "zendframework/zend-paginator": "^2.7"
     },
     "autoload": {
         "psr-4": {

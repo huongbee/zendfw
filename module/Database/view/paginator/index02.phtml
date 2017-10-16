@@ -1,0 +1,27 @@
+
+<h2><?=$this->escapeHtml('Paginator')?></h2>
+<?php if (count($this->paginator)): ?>
+<table class="table table-bordered">
+    <tr>
+        <th>Name</th>
+        <th>Summary</th>
+        <th>Price</th>
+        <th>Promotion</th>
+    </tr>
+<?php foreach ($this->paginator as $item): ?>
+    <tr>
+        <td><?=$item['name']?></td>
+        <td><?=$item['summary']?></td>
+        <td><?=$item['price']?></td>
+        <td><?=$item['promotion']?></td>
+    </tr>
+<?php endforeach; ?>
+</table>
+<?php endif; ?>
+
+<?= $this->paginationControl(
+    $this->paginator,
+    'Jumping',
+    'paginator_control_index02',
+    ['route' => 'paginator']
+) ?>

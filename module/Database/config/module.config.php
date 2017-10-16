@@ -40,13 +40,29 @@ return [
                         ]
                     ]
                 ]
+            ],
+            'paginator'=>[
+                'type'=>Segment::class,
+                'options'=>[
+                    'route'    => '/paginator[/:action[/page[/:page]]]',
+                    'defaults' => [
+                        'controller' => Controller\PaginatorController::class,
+                        'action'     => 'index',
+                        'page' => 1
+                    ],
+                    'constraints'=>[
+                        'action' => '[a-zA-Z0-9_-]*',
+                        'page' => '[0-9]*'
+                    ]
+                ]
             ]
         ],
     ],
     'controllers' => [
-        // 'factories' => [
-        //     Controller\AdapterController::class=>InvokableFactory::class
-        // ],
+        'factories' => [
+            //Controller\AdapterController::class=>InvokableFactory::class
+            Controller\PaginatorController::class=>InvokableFactory::class
+        ],
         'invokables'=>[
             'Controller\AdapterController'=>\Database\Controller\AdapterController::class,
             'Controller\SqlController'=>\Database\Controller\SqlController::class,
