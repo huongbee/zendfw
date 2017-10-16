@@ -12,7 +12,9 @@ use Zend\Validator\StringLength;
 
 class FoodsForm extends Form{
 
-    public function __construct(){
+    private $action;
+    public function __construct($action = "add"){
+        $this->action = $action;
         parent::__construct();
 
         $this->setAttributes([
@@ -116,9 +118,14 @@ class FoodsForm extends Form{
                 'class'=>"col-md-3 control-label"
             ]);
         $image->setAttributes([
-            'required'=>"required",
             'type'=>'file'
         ]);
+        if($this->action=="add"){
+            $image->setAttributes([
+                'required'=>"required"
+            ]);
+        }
+        
         $this->add($image);
 
         //unit
@@ -219,46 +226,48 @@ class FoodsForm extends Form{
             ]
         ]);
 
-        $inputFilter->add([
-            'name'=>'image',
-            'required'=>true,
-            'filters'=>[
-                ['name'=>'StringTrim']
-            ],
-            'validators'=>[
-                [
-                    'name'=>'NotEmpty',
-                    'options'=>[
-                        'break_chain_on_failure'=>true,
-                        'messages'=>[
-                            NotEmpty::IS_EMPTY => "Vui lòng chọn ảnh"
-                        ]
-                    ]
+        if($this->action=="add"){
+            $inputFilter->add([
+                'name'=>'image',
+                'required'=>true,
+                'filters'=>[
+                    ['name'=>'StringTrim']
                 ],
-                [
-                    'name'=>'filesize',
-                    'options'=>[
-                        'min'=>200*1024,
-                        'max'=>2*1024*1024,
-                        'break_chain_on_failure'=>true,
-                        'messages'=>[
-                            Size::TOO_SMALL=>'File quá nhỏ, dung lượng ít nhất %min%',
-                            Size::TOO_BIG=>'File quá lớn, dung lượng tối đa %max%'
+                'validators'=>[
+                    [
+                        'name'=>'NotEmpty',
+                        'options'=>[
+                            'break_chain_on_failure'=>true,
+                            'messages'=>[
+                                NotEmpty::IS_EMPTY => "Vui lòng chọn ảnh"
+                            ]
                         ]
-                    ]
-                ],
-                [
-                    'name'=>'fileMimeType',
-                    'options'=>[
-                        'mimeType'=>'image/png, image/jpeg, image/jpg, image/gif',
-                        'messages'=>[
-                            MimeType::FALSE_TYPE=>'Kiểu file %type% không được phép chọn',
-                            MimeType::NOT_DETECTED=>'MimeType không xác định',
-                            MimeType::NOT_READABLE => 'MineType không thể đọc'
+                    ],
+                    [
+                        'name'=>'filesize',
+                        'options'=>[
+                            'min'=>200*1024,
+                            'max'=>2*1024*1024,
+                            'break_chain_on_failure'=>true,
+                            'messages'=>[
+                                Size::TOO_SMALL=>'File quá nhỏ, dung lượng ít nhất %min%',
+                                Size::TOO_BIG=>'File quá lớn, dung lượng tối đa %max%'
+                            ]
+                        ]
+                    ],
+                    [
+                        'name'=>'fileMimeType',
+                        'options'=>[
+                            'mimeType'=>'image/png, image/jpeg, image/jpg, image/gif',
+                            'messages'=>[
+                                MimeType::FALSE_TYPE=>'Kiểu file %type% không được phép chọn',
+                                MimeType::NOT_DETECTED=>'MimeType không xác định',
+                                MimeType::NOT_READABLE => 'MineType không thể đọc'
+                            ]
                         ]
                     ]
                 ]
-            ]
-        ]);
+            ]);
+        }
     }
 }

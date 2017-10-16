@@ -47,7 +47,7 @@ class FoodsController extends AbstractActionController{
     }
 
     public function addAction(){
-        $form = new FoodsForm();
+        $form = new FoodsForm('add');
 
         $typeFoods = $this->table->getTypeFoods();
         $listTypes = [];
@@ -82,7 +82,7 @@ class FoodsController extends AbstractActionController{
         $data['update_at'] = date('Y-m-d');
         $data['image'] = $newName;
         $data['promotion'] = implode($data['promotion'],', ');
-
+        
         $foods = new Foods;
         $foods->exchangeArray($data);
         $this->table->saveFoods($foods);
@@ -97,10 +97,58 @@ class FoodsController extends AbstractActionController{
             return $this->redirect()->toRoute('foods',['controller'=>'FoodsController','action'=>'index']);
         }
         $food = $this->table->findFoods($id);
-        echo "<pre>";
-        print_r($food);
-        echo "</pre>";
-        return false;
+
+        $food->promotion = explode(', ',$food->promotion);
+
+        // echo "<pre>";
+        // print_r($food);
+        // echo "</pre>";
+        // die;
+
+        $form = new FoodsForm('edit');
+        $form->bind($food);
+
+        $typeFoods = $this->table->getTypeFoods();
+        $listTypes = [];
+        foreach($typeFoods as $type){
+            $listTypes[$type->id] = $type->name;
+        }
+        $form->get('id_type')->setValueOptions($listTypes);
+
+        $request = $this->getRequest();
+        if(!$request->isPost()){
+            return new ViewModel(['form'=>$form]);
+        }
+        $data = $request->getPost()->toArray();
+        $file = $request->getFiles()->toArray();
+        if($file['image']['error']<=0){
+            $data = array_merge_recursive($data,$file);
+            
+            $newName = date('Y-m-d-h-i-s').'-'.$file['image']['name'];
+            $image = new Rename([
+                'target'=>IMAGE_PATH.'hinh_mon_an/'.$newName,
+                'overwrite'=>true
+            ]);
+            $image->filter($file['image']);
+            
+            $data['image'] = $newName;
+        }
+        else{
+            $data['image'] = $form->get('image')->getValue();
+        }
+        $form->setData($data);
+        //
+        if(!$form->isValid()){
+            return new ViewModel(['form'=>$form]);
+        }
+        //$data = $form->getData();
+        //print_r($data);die;
+        $food->update_at = date('Y-m-d');
+        $food->promotion = implode($data['promotion'],', ');
+        ///print_r($food); die;
+        $this->table->saveFoods($food);
+        $this->flashMessenger()->addSuccessMessage('Cập nhật thành công');
+        return $this->redirect()->toRoute('foods',['controller'=>'FoodsController','action'=>'index']);
     }
     
     public function deleteAction(){

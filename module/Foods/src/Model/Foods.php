@@ -29,4 +29,8 @@ class Foods{
         $this->unit         = !empty($data['unit']) ? $data['unit'] : null;
         $this->today        = !empty($data['today']) ? 1 : 0;
     } 
+
+    public function getArrayCopy(){
+        return get_object_vars($this);
+    }
 }

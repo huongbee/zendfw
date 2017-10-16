@@ -93,7 +93,16 @@ class FoodsTable
             'unit'=>$foods->unit,
             'today'=>$foods->today,
         ];
-        $this->tableGateway->insert($data);
+        $id = (int)$foods->id;
+        if($id<=0){
+            $this->tableGateway->insert($data);
+        }
+        elseif(!$this->findFoods($id)){
+            throw new RuntimeException("Cập nhật không thành công. Không tìm thầy món ăn có id là: $id");
+        }
+        else{
+            $this->tableGateway->update($data,['id'=>$id]);
+        }        
         return;
     }
 
