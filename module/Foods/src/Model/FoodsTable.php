@@ -115,4 +115,8 @@ class FoodsTable
         }
         return $foods;
     }
+
+    public function deleteFood($id){
+        $this->tableGateway->delete(['id'=>$id]);
+    }
 }

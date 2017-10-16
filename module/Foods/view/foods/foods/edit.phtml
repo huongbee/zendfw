@@ -71,13 +71,13 @@ $form->prepare();
 
         <div class="form-group">
         <?=$this->formLabel($form->get('image'));?>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <?php
                 echo $this->formElement($form->get('image'));
                 echo $this->formElementErrors($form->get('image'));
                 ?>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-3">
                 <img src="../../img/hinh_mon_an/<?=$this->escapeHtml($form->get('image')->getValue())?>" alt="<?=$this->escapeHtml($form->get('name')->getValue())?>" width="120px">    
             </div>
         </div>

@@ -45,6 +45,12 @@ $this->headTitle($title);
                                                 'action'=>'edit',
                                                 'id'=>$food->id
                                             ])?>">Edit</a>
+                    <a href="<?=$this->url('foods',
+                                            [
+                                                'controller'=>'FoodsController',
+                                                'action'=>'delete',
+                                                'id'=>$food->id
+                                            ])?>">Delete</a>
                 </td>
             </tr>
         <?php 

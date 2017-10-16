@@ -7,6 +7,9 @@ use Zend\View\Model\ViewModel;
 use Foods\Form\FoodsForm;
 use Zend\Filter\File\Rename;
 use Foods\Model\Foods;
+use Zend\Validator\ValidatorChain;
+use Zend\Validator\File\Size;
+use Zend\Validator\File\MimeType;
 
 
 class FoodsController extends AbstractActionController{
@@ -99,12 +102,6 @@ class FoodsController extends AbstractActionController{
         $food = $this->table->findFoods($id);
 
         $food->promotion = explode(', ',$food->promotion);
-
-        // echo "<pre>";
-        // print_r($food);
-        // echo "</pre>";
-        // die;
-
         $form = new FoodsForm('edit');
         $form->bind($food);
 
@@ -122,6 +119,25 @@ class FoodsController extends AbstractActionController{
         $data = $request->getPost()->toArray();
         $file = $request->getFiles()->toArray();
         if($file['image']['error']<=0){
+            $validatorChain = new ValidatorChain();
+            $size = new Size(['min'=>200*1024,'max'=>2*1024*1024,]);
+            $size->setMessages([
+                Size::TOO_SMALL=>'File quá nhỏ, dung lượng ít nhất %min%',
+                Size::TOO_BIG=>'File quá lớn, dung lượng tối đa %max%'
+            ]);
+            $mimeType = new MimeType('image/png, image/jpeg, image/jpg, image/gif');
+            $mimeType->setMessages([
+                MimeType::FALSE_TYPE=>'Kiểu file %type% không được phép chọn',
+                MimeType::NOT_DETECTED=>'MimeType không xác định',
+                MimeType::NOT_READABLE => 'MineType không thể đọc'
+            ]);
+            $validatorChain->attach($size,true,1)
+                            ->attach($mimeType,true,2);
+            if(!$validatorChain->isValid($file['image'])){
+                $messages = $validatorChain->getMessages();
+                $form->get('image')->setMessages($messages);
+                return new ViewModel(['form'=>$form]);
+            }
             $data = array_merge_recursive($data,$file);
             
             $newName = date('Y-m-d-h-i-s').'-'.$file['image']['name'];
@@ -152,6 +168,26 @@ class FoodsController extends AbstractActionController{
     }
     
     public function deleteAction(){
-        
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('foods');
+        }
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $del = $request->getPost('del', 'No');
+
+            if ($del == 'Yes') {
+                $id = (int) $request->getPost('id');
+                $this->table->deleteFood($id);
+                
+                $this->flashMessenger()->addSuccessMessage('Xóa thành công');
+            }
+            return $this->redirect()->toRoute('foods');
+        }
+        return [
+            'id'    => $id,
+            'foods' => $this->table->findFoods($id),
+        ];
     }
 }
