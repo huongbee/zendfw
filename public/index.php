@@ -43,4 +43,6 @@ define('FILES_PATH',APPLICATION_PATH.'/public/files/');
 define('IMAGE_PATH',APPLICATION_PATH.'/public/img/');
 //echo FILES_PATH;
 // Run the application!
+
+// echo __DIR__;
 Application::init($appConfig)->run();
