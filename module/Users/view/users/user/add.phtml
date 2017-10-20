@@ -1,0 +1,115 @@
+<?php
+$title = "Thêm user";
+$this->headTitle($title);
+$form->prepare();
+?>
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+    <h2><?=$this->escapeHtml($title)?></h2>
+        <?=$this->form()->openTag($form)?>
+        <div class="form-group">
+        <?=$this->formLabel($form->get('username'));?>
+            <div class="col-md-9">
+                <?php
+                echo $this->formElement($form->get('username'));
+                echo $this->formElementErrors($form->get('username'));
+                ?>
+            </div>
+        </div>
+
+        <div class="form-group">
+        <?=$this->formLabel($form->get('email'));?>
+            <div class="col-md-9">
+                <?php
+                echo $this->formElement($form->get('email'));
+                echo $this->formElementErrors($form->get('email'));
+                ?>
+            </div>
+        </div>
+
+        <div class="form-group">
+        <?=$this->formLabel($form->get('fullname'));?>
+            <div class="col-md-9">
+                <?php
+                echo $this->formElement($form->get('fullname'));
+                echo $this->formElementErrors($form->get('fullname'));
+                ?>
+            </div>
+        </div>
+
+        <div class="form-group">
+        <?=$this->formLabel($form->get('birthdate'));?>
+            <div class="col-md-9">
+                <?php
+                echo $this->formElement($form->get('birthdate'));
+                echo $this->formElementErrors($form->get('birthdate'));
+                ?>
+            </div>
+        </div>
+
+        <div class="form-group">
+        <?=$this->formLabel($form->get('gender'));?>
+            <div class="col-md-9">
+                <?php
+                echo $this->formElement($form->get('gender'));
+                echo $this->formElementErrors($form->get('gender'));
+                ?>
+            </div>
+        </div>
+
+        <div class="form-group">
+        <?=$this->formLabel($form->get('address'));?>
+            <div class="col-md-9">
+                <?php
+                echo $this->formElement($form->get('address'));
+                echo $this->formElementErrors($form->get('address'));
+                ?>
+            </div>
+        </div>
+
+        <div class="form-group">
+        <?=$this->formLabel($form->get('phone'));?>
+            <div class="col-md-9">
+                <?php
+                echo $this->formElement($form->get('phone'));
+                echo $this->formElementErrors($form->get('phone'));
+                ?>
+            </div>
+        </div>
+
+        <div class="form-group">
+        <?=$this->formLabel($form->get('role'));?>
+            <div class="col-md-9">
+                <?php
+                echo $this->formElement($form->get('role'));
+                echo $this->formElementErrors($form->get('role'));
+                ?>
+            </div>
+        </div>
+        <div class="form-group">
+        <?=$this->formLabel($form->get('password'));?>
+            <div class="col-md-9">
+                <?php
+                echo $this->formElement($form->get('password'));
+                echo $this->formElementErrors($form->get('password'));
+                ?>
+            </div>
+        </div>
+        <div class="form-group">
+        <?=$this->formLabel($form->get('confirm_password'));?>
+            <div class="col-md-9">
+                <?php
+                echo $this->formElement($form->get('confirm_password'));
+                echo $this->formElementErrors($form->get('confirm_password'));
+                ?>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 col-md-offset-10">
+                <?=$this->formElement($form->get('btnSubmit'));?>
+            </div>
+        </div>
+        <?=$this->form()->closeTag()?>
+    </div>
+</div>
