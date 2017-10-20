@@ -37,6 +37,7 @@ return [
                     'user'     => 'root',
                     'password' => '',
                     'dbname'   => 'zendframework',
+                    'charset' => 'utf8'
                 ],
             ],
         ],

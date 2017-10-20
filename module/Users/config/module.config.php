@@ -32,7 +32,7 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            Controller\UserController::class => InvokableFactory::class,
+            Controller\UserController::class => Controller\Factory\UserControllerFactory::class,
         ],
     ],
     'view_manager' => [
@@ -62,4 +62,9 @@ return [
             ],
         ],
     ],
+    'service_manager'=>[
+        'factories' => [
+            Service\UserManager::class =>  Service\Factory\UserManagerFactory::class
+        ]
+    ]
 ];

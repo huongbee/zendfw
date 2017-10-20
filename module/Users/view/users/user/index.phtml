@@ -1,0 +1,33 @@
+<?php
+$title = "Danh sách User";
+$this->headTitle($title);
+?>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Fullname</th>
+            <th>Birthday </th>
+            <th>Phone</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <?php $stt = 1;
+        foreach($users as $user):?>
+        <tr>
+            <td><?=$stt?></td>
+            <td><?=$this->escapeHtml($user->getUsername())?></td>
+            <td><?=$this->escapeHtml($user->getEmail())?></td>
+            <td><?=$this->escapeHtml($user->getFullname())?></td>
+            <td><?=$user->getBirthdate()->format('d-m-Y')?></td>
+            <td><?=$this->escapeHtml($user->getPhone())?></td>
+        </tr>
+        <?php 
+        $stt++;
+        endforeach?>
+    </tbody>
+</table>
