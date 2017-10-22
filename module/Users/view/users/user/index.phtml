@@ -3,6 +3,7 @@ $title = "Danh sách User";
 $this->headTitle($title);
 ?>
 <h2><?=$title?></h2>
+<div><a  class="btn btn-primary" href="<?=$this->url('user',['action'=>'add'])?>" role="button">Thêm User</a></div>
 <div class="col-md-4 col-md-offset-4"><?=$this->flashMessenger()->render('success',['alert', 'alert-success'])?></div>
 <table class="table table-hover">
     <thead>
@@ -27,7 +28,8 @@ $this->headTitle($title);
             <td><?=$user->getBirthdate()->format('d-m-Y')?></td>
             <td><?=$this->escapeHtml($user->getPhone())?></td>
             <td>
-                <a href="<?=$this->url('user',['action'=>'edit','id'=>$this->escapeHtml($user->getId())])?>">Edit</a> | Delete</td>
+                <a href="<?=$this->url('user',['action'=>'edit','id'=>$this->escapeHtml($user->getId())])?>">Edit</a> | 
+                <a href="<?=$this->url('user',['action'=>'delete','id'=>$this->escapeHtml($user->getId())])?>">Delete</a></td>
         </tr>
         <?php 
         $stt++;

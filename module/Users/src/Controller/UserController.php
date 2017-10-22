@@ -79,6 +79,30 @@ class UserController extends AbstractActionController{
 
     }
 
+    public function deleteAction(){
+        $idUser = $this->params()->fromRoute('id',0);
+        if($idUser<=0){
+            $this->getResponse()->setStatusCode('404');
+            return;
+        }
+
+        $user = $this->entityManager->getRepository(Users::class)->find($idUser);
+        if(!$user){
+            $this->getResponse()->setStatusCode('404');
+            return;
+        }
+        
+        if($this->getRequest()->isPost()){
+            $btn = $this->getRequest()->getPost('delete','No');
+            if($btn=="Yes"){
+                $this->userManager->removeUser($user);
+                $this->flashMessenger()->addSuccessMessage('Xóa thành công');
+            }
+            return $this->redirect()->toRoute('user');
+        }
+        return new ViewModel(['user'=>$user]);
+    }
+
 }
 
 

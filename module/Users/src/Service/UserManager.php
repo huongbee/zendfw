@@ -81,6 +81,11 @@ class UserManager{
         $this->entityManager->flush();
         return $user;
     }
+
+    public function removeUser($user){
+        $this->entityManager->remove($user);
+        $this->entityManager->flush();
+    }
 }
 
 ?>
