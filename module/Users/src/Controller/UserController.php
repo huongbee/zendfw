@@ -28,12 +28,36 @@ class UserController extends AbstractActionController{
             $form->setData($data);
             if($form->isValid()){
                 $data = $form->getData();
-                echo "<pre>";
-                print_r($data);
-                echo "</pre>";
+                // echo "<pre>";
+                // print_r($data);
+                // echo "</pre>";
+                $user = $this->userManager->addUser($data);
+                $this->flashMessenger()->addSuccessMessage('Thêm thành công');
+                return $this->redirect()->toRoute('user');
+
             }
         }
         return new ViewModel(['form'=>$form]);
+    }
+
+    public function editAction(){
+        $idUser = $this->params()->fromRoute('id',0);
+        if($idUser<=0){
+            $this->getResponse()->setStatusCode('404');
+            return;
+        }
+
+        $user = $this->entityManager->getRepository(Users::class)->find($idUser);
+        if(!$user){
+            $this->getResponse()->setStatusCode('404');
+            return;
+        }
+        //
+        $form = new UserForm('edit');
+        if(!$this->getRequest()->isPost()){
+            return new ViewModel(['form'=>$form]);
+        }
+
     }
 
 }

@@ -2,7 +2,8 @@
 $title = "Danh sách User";
 $this->headTitle($title);
 ?>
-
+<h2><?=$title?></h2>
+<div class="col-md-4 col-md-offset-4"><?=$this->flashMessenger()->render('success',['alert', 'alert-success'])?></div>
 <table class="table table-hover">
     <thead>
         <tr>
@@ -12,7 +13,7 @@ $this->headTitle($title);
             <th>Fullname</th>
             <th>Birthday </th>
             <th>Phone</th>
-
+            <th>Options</th>
         </tr>
     </thead>
     <tbody>
@@ -25,6 +26,8 @@ $this->headTitle($title);
             <td><?=$this->escapeHtml($user->getFullname())?></td>
             <td><?=$user->getBirthdate()->format('d-m-Y')?></td>
             <td><?=$this->escapeHtml($user->getPhone())?></td>
+            <td>
+                <a href="<?=$this->url('user',['action'=>'edit','id'=>$this->escapeHtml($user->getId())])?>">Edit</a> | Delete</td>
         </tr>
         <?php 
         $stt++;

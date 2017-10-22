@@ -41,41 +41,44 @@ class UserForm extends Form{
             ]
         ]);
         
-        //password
-        $this->add([
-            'type'=>'password',
-            'name'=>'password',
-            'attributes'=>[
-                'class'=>'form-control',
-                'placeholder'=>'Nhập mật khẩu',
-                'id'=>'password'
-            ],
-            'options'=>[
-                'label'=>'Mật khẩu:',
-                'label_attributes'=>[
-                    'for' => 'password',
-                    'class'=>'col-md-3 control-label'
+        if($this->action=="add"){
+            //password
+            $this->add([
+                'type'=>'password',
+                'name'=>'password',
+                'attributes'=>[
+                    'class'=>'form-control',
+                    'placeholder'=>'Nhập mật khẩu',
+                    'id'=>'password'
+                ],
+                'options'=>[
+                    'label'=>'Mật khẩu:',
+                    'label_attributes'=>[
+                        'for' => 'password',
+                        'class'=>'col-md-3 control-label'
+                    ]
                 ]
-            ]
-        ]);
+            ]);
 
-        //confirm_password
-        $this->add([
-            'type'=>'password',
-            'name'=>'confirm_password',
-            'attributes'=>[
-                'class'=>'form-control',
-                'placeholder'=>'Nhập lại mật khẩu',
-                'id'=>'confirm_password'
-            ],
-            'options'=>[
-                'label'=>'Nhập lại mật khẩu:',
-                'label_attributes'=>[
-                    'for' => 'confirm_password',
-                    'class'=>'col-md-3 control-label'
+            //confirm_password
+            $this->add([
+                'type'=>'password',
+                'name'=>'confirm_password',
+                'attributes'=>[
+                    'class'=>'form-control',
+                    'placeholder'=>'Nhập lại mật khẩu',
+                    'id'=>'confirm_password'
+                ],
+                'options'=>[
+                    'label'=>'Nhập lại mật khẩu:',
+                    'label_attributes'=>[
+                        'for' => 'confirm_password',
+                        'class'=>'col-md-3 control-label'
+                    ]
                 ]
-            ]
-        ]);
+            ]);
+        }
+        
         //fullname
         $this->add([
             'type'=>'text',
@@ -259,116 +262,119 @@ class UserForm extends Form{
                 ]
             ]
         ]);
-        $inputFilter->add([
-            'name'=>'password',
-            'required'=>true,
-            'filters'=>[
-                ['name'=>'StringTrim'],
-                ['name'=>'StripTags'],
-                ['name'=>'StripNewlines']
-            ],
-            'validators'=>[
-                [
-                    'name'=>'NotEmpty',
-                    'options'=>[
-                        'break_chain_on_failure'=>true,
-                        'messages'=>[
-                            NotEmpty::IS_EMPTY=>'Mật khẩu không được rỗng'
-                        ]
-                    ]
+        if($this->action=="add"){
+            $inputFilter->add([
+                'name'=>'password',
+                'required'=>true,
+                'filters'=>[
+                    ['name'=>'StringTrim'],
+                    ['name'=>'StripTags'],
+                    ['name'=>'StripNewlines']
                 ],
-                [
-                    'name'=>'StringLength',
-                    'options'=>[
-                        'break_chain_on_failure'=>true,
-                        'min'=>8,
-                        'max'=>20,
-                        'messages'=>[
-                            StringLength::TOO_SHORT=>'Mật khẩu ít nhất %min% kí tự',
-                            StringLength::TOO_LONG=>'Mật khẩu không quá %max% kí tự',
+                'validators'=>[
+                    [
+                        'name'=>'NotEmpty',
+                        'options'=>[
+                            'break_chain_on_failure'=>true,
+                            'messages'=>[
+                                NotEmpty::IS_EMPTY=>'Mật khẩu không được rỗng'
+                            ]
                         ]
-                    ]
-                ],
-                [
-                    'name'=>"Regex",
-                    'options'=>[
-                        'break_chain_on_failure'=>true,
-                        'pattern'=>'/[a-zA-Z0-9_-]/',
-                        'messages'=>[
-                            \Zend\Validator\Regex::INVALID=> "Pattern %pattern% không chính xác",
-                            \Zend\Validator\Regex::NOT_MATCH=> "Mật khẩu phải chưa các kí tự sau %pattern%",
-                            \Zend\Validator\Regex::ERROROUS=> "Có lỗi nội bộ đối với pattern %pattern%",
+                    ],
+                    [
+                        'name'=>'StringLength',
+                        'options'=>[
+                            'break_chain_on_failure'=>true,
+                            'min'=>8,
+                            'max'=>20,
+                            'messages'=>[
+                                StringLength::TOO_SHORT=>'Mật khẩu ít nhất %min% kí tự',
+                                StringLength::TOO_LONG=>'Mật khẩu không quá %max% kí tự',
+                            ]
                         ]
-                    ]
-                ],
-                [
-                    'name'=>"Regex",
-                    'options'=>[
-                        'break_chain_on_failure'=>true,
-                        'pattern'=>'/[!@#$%^&]/',
-                        'messages'=>[
-                            \Zend\Validator\Regex::INVALID=> "Pattern %pattern% không chính xác",
-                            \Zend\Validator\Regex::NOT_MATCH=> "Mật khẩu phải chưa các kí tự sau %pattern%",
-                            \Zend\Validator\Regex::ERROROUS=> "Có lỗi nội bộ đối với pattern %pattern%",
+                    ],
+                    [
+                        'name'=>"Regex",
+                        'options'=>[
+                            'break_chain_on_failure'=>true,
+                            'pattern'=>'/[a-zA-Z0-9_-]/',
+                            'messages'=>[
+                                \Zend\Validator\Regex::INVALID=> "Pattern %pattern% không chính xác",
+                                \Zend\Validator\Regex::NOT_MATCH=> "Mật khẩu phải chưa các kí tự sau %pattern%",
+                                \Zend\Validator\Regex::ERROROUS=> "Có lỗi nội bộ đối với pattern %pattern%",
+                            ]
+                        ]
+                    ],
+                    [
+                        'name'=>"Regex",
+                        'options'=>[
+                            'break_chain_on_failure'=>true,
+                            'pattern'=>'/[!@#$%^&]/',
+                            'messages'=>[
+                                \Zend\Validator\Regex::INVALID=> "Pattern %pattern% không chính xác",
+                                \Zend\Validator\Regex::NOT_MATCH=> "Mật khẩu phải chưa các kí tự sau %pattern%",
+                                \Zend\Validator\Regex::ERROROUS=> "Có lỗi nội bộ đối với pattern %pattern%",
+                            ]
                         ]
                     ]
                 ]
-            ]
-        ]);
-        $inputFilter->add([
-            'name'=>'confirm_password',
-            'required'=>true,
-            'filters'=>[
-                ['name'=>'StringTrim'],
-                ['name'=>'StripTags'],
-                ['name'=>'StripNewlines']
-            ],
-            'validators'=>[
-                [
-                    'name'=>'NotEmpty',
-                    'options'=>[
-                        'break_chain_on_failure'=>true,
-                        'messages'=>[
-                            NotEmpty::IS_EMPTY=>'Mật khẩu nhập lại không được rỗng'
-                        ]
-                    ]
+            ]);
+            $inputFilter->add([
+                'name'=>'confirm_password',
+                'required'=>true,
+                'filters'=>[
+                    ['name'=>'StringTrim'],
+                    ['name'=>'StripTags'],
+                    ['name'=>'StripNewlines']
                 ],
-                [
-                    'name'=>'Identical',
-                    'options'=>[
-                        'break_chain_on_failure'=>true,
-                        'token'=>'password',
-                        'messages'=>[
-                            Identical::NOT_SAME=>'Mật khẩu không giống nhau',
-                            Identical::MISSING_TOKEN=>'Missing token'
+                'validators'=>[
+                    [
+                        'name'=>'NotEmpty',
+                        'options'=>[
+                            'break_chain_on_failure'=>true,
+                            'messages'=>[
+                                NotEmpty::IS_EMPTY=>'Mật khẩu nhập lại không được rỗng'
+                            ]
                         ]
-                    ]
-                ],
-                [
-                    'name'=>"Regex",
-                    'options'=>[
-                        'break_chain_on_failure'=>true,
-                        'pattern'=>'/[a-zA-Z0-9_-]/',
-                        'messages'=>[
-                            \Zend\Validator\Regex::INVALID=> "Pattern %pattern% không chính xác",
-                            \Zend\Validator\Regex::NOT_MATCH=> "Mật khẩu phải chưa các kí tự sau %pattern%",
-                            \Zend\Validator\Regex::ERROROUS=> "Có lỗi nội bộ đối với pattern %pattern%",
+                    ],
+                    [
+                        'name'=>'Identical',
+                        'options'=>[
+                            'break_chain_on_failure'=>true,
+                            'token'=>'password',
+                            'messages'=>[
+                                Identical::NOT_SAME=>'Mật khẩu không giống nhau',
+                                Identical::MISSING_TOKEN=>'Missing token'
+                            ]
                         ]
-                    ]
-                ],
-                [
-                    'name'=>"Regex",
-                    'options'=>[
-                        'pattern'=>'/[!@#$%^&]/',
-                        'messages'=>[
-                            \Zend\Validator\Regex::INVALID=> "Pattern %pattern% không chính xác",
-                            \Zend\Validator\Regex::NOT_MATCH=> "Mật khẩu phải chưa các kí tự sau %pattern%",
-                            \Zend\Validator\Regex::ERROROUS=> "Có lỗi nội bộ đối với pattern %pattern%",
+                    ],
+                    [
+                        'name'=>"Regex",
+                        'options'=>[
+                            'break_chain_on_failure'=>true,
+                            'pattern'=>'/[a-zA-Z0-9_-]/',
+                            'messages'=>[
+                                \Zend\Validator\Regex::INVALID=> "Pattern %pattern% không chính xác",
+                                \Zend\Validator\Regex::NOT_MATCH=> "Mật khẩu phải chưa các kí tự sau %pattern%",
+                                \Zend\Validator\Regex::ERROROUS=> "Có lỗi nội bộ đối với pattern %pattern%",
+                            ]
+                        ]
+                    ],
+                    [
+                        'name'=>"Regex",
+                        'options'=>[
+                            'pattern'=>'/[!@#$%^&]/',
+                            'messages'=>[
+                                \Zend\Validator\Regex::INVALID=> "Pattern %pattern% không chính xác",
+                                \Zend\Validator\Regex::NOT_MATCH=> "Mật khẩu phải chưa các kí tự sau %pattern%",
+                                \Zend\Validator\Regex::ERROROUS=> "Có lỗi nội bộ đối với pattern %pattern%",
+                            ]
                         ]
                     ]
                 ]
-            ]
-        ]);
+            ]);
+        }
+        
 
         $inputFilter->add([
             'name'=>'fullname',
