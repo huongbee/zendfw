@@ -1,5 +1,5 @@
 <?php
-$title = "Thêm user";
+$title = "Edit user";
 $this->headTitle($title);
 
 $form->get('username')->setAttributes([
@@ -11,7 +11,7 @@ $form->prepare();
 
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
-    <h2><?=$this->escapeHtml($title)?></h2>
+    <h2><?=$this->escapeHtml($title) .' '. $user->getUsername()?></h2>
         <?=$this->form()->openTag($form)?>
         <div class="form-group">
         <?=$this->formLabel($form->get('username'));?>

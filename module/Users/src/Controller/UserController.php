@@ -55,7 +55,26 @@ class UserController extends AbstractActionController{
         //
         $form = new UserForm('edit');
         if(!$this->getRequest()->isPost()){
-            return new ViewModel(['form'=>$form]);
+            $data = [
+                'username'=> $user->getUsername(),
+                'email' => $user->getEmail(),
+                'fullname'=>$user->getFullname(),
+                'birthdate'=>$user->getBirthdate(),
+                'gender'=>$user->getGender(),
+                'address'=>$user->getAddress(),
+                'phone'=>$user->getPhone(),
+                'role'=>$user->getRole()
+            ];
+            $form->setData($data);
+            return new ViewModel(['form'=>$form,'user'=>$user]);
+        }
+        $data = $this->params()->fromPost();
+        $form->setData($data);
+        if($form->isValid()){
+            $data = $form->getData();
+            $this->userManager->editUser($user,$data);
+            $this->flashMessenger()->addSuccessMessage('Cập nhật thành công');
+            return $this->redirect()->toRoute('user');
         }
 
     }

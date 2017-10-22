@@ -54,6 +54,33 @@ class UserManager{
 
         //111111!!
     }
+
+    public function editUser($user,$data){
+        $sql = "select u from Users\Entity\Users u where u.email ='".$data['email']."' and u.username !='".$data['username']."'";
+        $q = $this->entityManager->createQuery($sql);
+        $users = $q->getResult();
+        
+        if(!empty($users)){
+            throw new \Exception("Email ".$data['email']." đã có người sử dụng");
+        }
+        // if($this->checkEmailExists($data['email'])){
+        //     throw new \Exception("Email ".$data['email']." đã có người sử dụng");
+        // }
+        $user->setUsername($data['username']);
+        $user->setFullname($data['fullname']);
+
+        $birthdate = new \DateTime($data['birthdate']);
+        $birthdate->format('Y-m-d');
+        $user->setBirthdate($birthdate);
+        $user->setGender($data['gender']);
+        $user->setAddress($data['address']);
+        $user->setEmail($data['email']);
+        $user->setPhone($data['phone']);
+        $user->setRole($data['role']);
+
+        $this->entityManager->flush();
+        return $user;
+    }
 }
 
 ?>
