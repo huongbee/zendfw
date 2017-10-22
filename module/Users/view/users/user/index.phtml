@@ -29,7 +29,9 @@ $this->headTitle($title);
             <td><?=$this->escapeHtml($user->getPhone())?></td>
             <td>
                 <a href="<?=$this->url('user',['action'=>'edit','id'=>$this->escapeHtml($user->getId())])?>">Edit</a> | 
-                <a href="<?=$this->url('user',['action'=>'delete','id'=>$this->escapeHtml($user->getId())])?>">Delete</a></td>
+                <a href="<?=$this->url('user',['action'=>'delete','id'=>$this->escapeHtml($user->getId())])?>">Delete</a> |
+                <a href="<?=$this->url('user',['action'=>'change-password','id'=>$this->escapeHtml($user->getId())])?>">Đổi mật khẩu</a>
+            </td>
         </tr>
         <?php 
         $stt++;

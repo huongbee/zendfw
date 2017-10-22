@@ -86,6 +86,30 @@ class UserManager{
         $this->entityManager->remove($user);
         $this->entityManager->flush();
     }
+
+    public function verifyPassword($securePass,$password ){
+        $bcrypt = new Bcrypt();        
+        if ($bcrypt->verify($password, $securePass)) {
+            return true;
+        } 
+        return false;
+    }
+
+    public function changePassword($user,$data){
+        $securePass = $user->getPassword();
+        $password = $data['old_pw'];
+        if(!$this->verifyPassword($securePass,$password)){
+            return false;
+        }
+        $newPassword = $data['new_pw'];
+
+        $bcrypt = new Bcrypt();
+        $securePass = $bcrypt->create($newPassword);
+        $user->setPassword($securePass);
+
+        $this->entityManager->flush();
+        return true;
+    }
 }
 
 ?>

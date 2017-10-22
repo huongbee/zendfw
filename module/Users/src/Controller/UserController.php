@@ -4,6 +4,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Users\Entity\Users;
 use Users\Form\UserForm;
+use Users\Form\ChangePasswordForm;
 
 class UserController extends AbstractActionController{
 
@@ -101,6 +102,42 @@ class UserController extends AbstractActionController{
             return $this->redirect()->toRoute('user');
         }
         return new ViewModel(['user'=>$user]);
+    }
+
+    public function changePasswordAction(){
+        $idUser = $this->params()->fromRoute('id',0);
+        if($idUser<=0){
+            $this->getResponse()->setStatusCode('404');
+            return;
+        }
+
+        $user = $this->entityManager->getRepository(Users::class)->find($idUser);
+        if(!$user){
+            $this->getResponse()->setStatusCode('404');
+            return;
+        }
+        $form = new ChangePasswordForm();
+        if($this->getRequest()->isPost()){
+            
+            $data = $this->params()->fromPost();
+            $form->setData($data);
+            if($form->isValid()){
+                $data = $form->getData();
+                $check = $this->userManager->changePassword($user,$data);
+                if(!$check){
+                    $this->flashMessenger()->addErrorMessage('Mật khẩu cũ chưa đúng, vui lòng kiểm tra lại');
+                    return $this->redirect()->toRoute('user',['action'=>'change-password','id'=>$user->getId()]);
+                }
+                else{
+                    $this->flashMessenger()->addSuccessMessage('Mật khẩu đã thay đổi');
+                    return $this->redirect()->toRoute('user');
+                }
+            }
+        }
+        return new ViewModel(['form'=>$form]);
+        //111111!!
+        //111111!!@
+        //111111!!@@
     }
 
 }
