@@ -3,6 +3,9 @@ namespace Users\Service;
 use Users\Entity\Users;
 use Zend\Crypt\Password\Bcrypt;
 use Zend\Math\Rand;
+use Zend\Mail\Message;
+use Zend\Mail\Transport\Smtp as SmtpTransport;
+use Zend\Mail\Transport\SmtpOptions;
 
 class UserManager{
 
@@ -117,9 +120,59 @@ class UserManager{
         $user->setPasswordResetToken($token);
 
         $dateCreate = date('Y-m-d H:i:s');
+        $dateCreate = new \DateTime($dateCreate);
+        $dateCreate->format('Y-m-d H:i:s');
         $user->setPasswordResetTokenDate($dateCreate);
         $this->entityManager->flush();
-        
+
+        $http = isset($_SERVER['HTTPS']) ? "https://" : "http://";
+        $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : "localhost";
+        $url = $http.$host."/zendframework/public/set-password/".$token;
+
+        $bodyMessage = "Chào bạn, ".$user->getFullname()."
+                        \nBạn vui lòng chọn vào link bên dưới để thực hiện reset password:
+                        \n$url
+                        \nNếu bạn không yêu cầu đặt lại mật khẩu, vui lòng bỏ qua thông báo này.
+                        ";
+
+
+        $message = new Message();
+        $message->addTo($user->getEmail());
+        $message->addFrom("huonghuong08.php@gmail.com");
+        $message->setSubject('ResetPassword!');
+        $message->setBody($bodyMessage);
+
+        $transport = new SmtpTransport();
+        $options   = new SmtpOptions([
+            'name'              => 'smtp.gmail.com',
+            'host'              => 'smtp.gmail.com',
+            'port'              => 587,
+            'connection_class'  => 'login',
+            'connection_config' => [
+                'username' => 'huonghuong08.php@gmail.com',
+                'password' => '0123456789999',
+                'port'     => 587,
+                'ssl'      => 'tls'
+            ],
+        ]);
+        $transport->setOptions($options);
+        $transport->send($message);
+
+    }
+
+    public function checkResetPasswordToken($token){
+        $user = $this->entityManager->getRepository(Users::class)
+                    ->findOneBy(['pw_reset_token'=>$token]);
+        if(!$user){
+            return false;
+        }
+        $userTokenDate = $user->getPasswordResetTokenDate()->getTimestamp();
+        $now = new \Datetime('now');
+        $now = $now->getTimestamp();
+        if(($now - $userTokenDate) > 86400){ //24*60*60
+            return false;
+        }
+        return true;
     }
 }
 

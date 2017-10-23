@@ -28,6 +28,19 @@ return [
                     ]
                 ],
             ],
+            'setpassword' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/set-password[/:token]',
+                    'defaults' => [
+                        'controller' => Controller\UserController::class,
+                        'action'     => 'setPassword',
+                    ],
+                    'constraints'=>[
+                        'token' => '[a-zA-Z0-9_-]*'
+                    ]
+                ],
+            ],
         ],
     ],
     'controllers' => [

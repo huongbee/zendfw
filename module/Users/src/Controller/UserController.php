@@ -147,12 +147,32 @@ class UserController extends AbstractActionController{
             $data = $this->params()->fromPost();
             $form->setData($data);
             if($form->isValid()){
-                print_r($data);
+                $user = $this->entityManager->getRepository(Users::class)->findOneByEmail($data['email']);
+                if($user !==null){
+                    $this->userManager->createTokenPasswordReset($user);
+                    $this->flashMessenger()->addSuccessMessage('Kiểm tra hộp thư để Reset Password!');
+
+                }
+                else{
+                    $this->flashMessenger()->addErrorMessage('Email không tồn tại');
+                }
+                return $this->redirect()->toRoute('user',['action'=>'reset-password']);
             }
         }
         return new ViewModel(['form'=>$form]);
     }
 
+    public function setPasswordAction(){
+        $token = $this->params()->fromRoute('token',null);
+        if($token == null || strlen($token)!=32){
+            throw new \Exception("Token không hợp lệ");
+        }
+        if(!$this->userManager->checkResetPasswordToken($token)){
+            throw new \Exception("Token không hợp lệ hoặc đã hết hạn sử dụng. Vui lòng thử lại");
+        }
+        echo "token hợp lệ";
+        return false;
+    }
 }
 
 
