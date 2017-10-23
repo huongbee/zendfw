@@ -2,6 +2,7 @@
 namespace Users\Service;
 use Users\Entity\Users;
 use Zend\Crypt\Password\Bcrypt;
+use Zend\Math\Rand;
 
 class UserManager{
 
@@ -109,6 +110,16 @@ class UserManager{
 
         $this->entityManager->flush();
         return true;
+    }
+
+    public function createTokenPasswordReset($user){
+        $token = Rand::getString(32,"0123456789qwertyuiopasdfghjklzxcvbnm", true);
+        $user->setPasswordResetToken($token);
+
+        $dateCreate = date('Y-m-d H:i:s');
+        $user->setPasswordResetTokenDate($dateCreate);
+        $this->entityManager->flush();
+        
     }
 }
 

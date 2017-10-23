@@ -43,9 +43,42 @@ class Users{
     /** @Mapping\Column(type="string" , name="role") */
     private $role;
 
+    /** @Mapping\Column(type="string" , name="pw_reset_token") */
+    private $pw_reset_token;
+
+    /** @Mapping\Column(type="datetime" , name="pw_reset_token_date") */
+    private $pw_reset_token_date;
+
 
     //`id`, `username`, `password`,
     // `fullname`, `birthdate`, `gender`, `address`, `email`, `phone`, `role`
+    /**
+     * @return
+     */
+    public function getPasswordResetTokenDate(){
+        return $this->pw_reset_token_date;
+    }
+
+    /**
+     * @param
+     */
+    public function setPasswordResetTokenDate($pw_reset_token_date){
+        $this->pw_reset_token_date = $pw_reset_token_date;
+    }
+    /**
+     * @return
+     */
+    public function getPasswordResetToken(){
+        return $this->pw_reset_token;
+    }
+
+    /**
+     * @param
+     */
+    public function setPasswordResetToken($pw_reset_token){
+        $this->pw_reset_token = $pw_reset_token;
+    }
+
     /**
      * @return
      */

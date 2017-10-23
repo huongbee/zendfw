@@ -5,6 +5,7 @@ use Zend\View\Model\ViewModel;
 use Users\Entity\Users;
 use Users\Form\UserForm;
 use Users\Form\ChangePasswordForm;
+use Users\Form\ResetPasswordForm;
 
 class UserController extends AbstractActionController{
 
@@ -138,6 +139,18 @@ class UserController extends AbstractActionController{
         //111111!!
         //111111!!@
         //111111!!@@
+    }
+
+    public function resetPasswordAction(){
+        $form = new ResetPasswordForm;
+        if($this->getRequest()->isPost()){
+            $data = $this->params()->fromPost();
+            $form->setData($data);
+            if($form->isValid()){
+                print_r($data);
+            }
+        }
+        return new ViewModel(['form'=>$form]);
     }
 
 }
