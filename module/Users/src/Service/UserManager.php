@@ -174,6 +174,27 @@ class UserManager{
         }
         return true;
     }
+
+    public function setNewPasswordByToken($token, $newPassword){
+        if(!$this->checkResetPasswordToken($token)){
+            return false;
+        }
+        $user = $this->entityManager->getRepository(Users::class)
+        ->findOneBy(['pw_reset_token'=>$token]);
+        if(!$user){
+            return false;
+        }
+        else{
+            $bcrypt = new Bcrypt();
+            $passwordHash = $bcrypt->create($newPassword);
+            $user->setPassword($passwordHash);
+            //reset
+            $user->setPasswordResetTokenDate(null);
+            $user->setPasswordResetToken(null);
+            $this->entityManager->flush();
+            return true;
+        }
+    }
 }
 
 ?>

@@ -156,7 +156,7 @@ class UserController extends AbstractActionController{
                 else{
                     $this->flashMessenger()->addErrorMessage('Email không tồn tại');
                 }
-                return $this->redirect()->toRoute('user',['action'=>'reset-password']);
+                return $this->redirect()->toRoute('resetpassword');
             }
         }
         return new ViewModel(['form'=>$form]);
@@ -170,8 +170,28 @@ class UserController extends AbstractActionController{
         if(!$this->userManager->checkResetPasswordToken($token)){
             throw new \Exception("Token không hợp lệ hoặc đã hết hạn sử dụng. Vui lòng thử lại");
         }
-        echo "token hợp lệ";
-        return false;
+        
+        $form = new ChangePasswordForm('resetPw');
+        if($this->getRequest()->isPost()){
+            $data = $this->params()->fromPost();
+            $form->setData($data);
+            if($form->isValid()){
+                if($this->userManager->setNewPasswordByToken($token, $data['new_pw'])){
+                    $this->flashMessenger()->addSuccessMessage('Đổi mật khẩu thành công');
+                    return $this->redirect()->toRoute('user');
+                }
+                else{
+                    $this->flashMessenger()->addErrorMessage('Email không tồn tại');
+                    return $this->redirect()->toRoute('setpassword',['token'=>$token]);
+                    //123456!!!
+                    //$2y$10$MgLmhBe/VLoXhRuB4xBKhuPd2S1UtfWb0VSO9EEx4bwitAbTd72PK
+
+                    // 123456!@#
+                    //$2y$10$Bq1SC8iuO8AdUxVseudz0uhTYPO4PX2NISO5EiUHPksrThcgrTsr6
+                }
+            }
+        }
+        return new ViewModel(['form'=>$form]);
     }
 }
 

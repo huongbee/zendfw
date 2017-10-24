@@ -54,7 +54,7 @@ class ResetPasswordForm extends Form{
                     'class' => 'Image',
                     'imgDir' => 'public/img/captcha',
                     'suffix' => '.png',
-                    'imgUrl' => '../img/captcha',
+                    'imgUrl' => 'img/captcha',
                     'font' => APPLICATION_PATH.'/data/font/thorne_shaded.ttf',
                     'fsize' => 30,
                     'width' => 400,

@@ -41,6 +41,16 @@ return [
                     ]
                 ],
             ],
+            'resetpassword' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/reset-password',
+                    'defaults' => [
+                        'controller' => Controller\UserController::class,
+                        'action'     => 'resetPassword',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
