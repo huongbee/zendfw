@@ -10,6 +10,7 @@ namespace Users;
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
+use Zend\Authentication\AuthenticationService;
 
 return [
     'router' => [
@@ -56,6 +57,7 @@ return [
     'controllers' => [
         'factories' => [
             Controller\UserController::class => Controller\Factory\UserControllerFactory::class,
+            Controller\AuthController::class => Controller\Factory\AuthControllerFactory::class,
         ],
     ],
     'view_manager' => [
@@ -87,7 +89,10 @@ return [
     ],
     'service_manager'=>[
         'factories' => [
-            Service\UserManager::class =>  Service\Factory\UserManagerFactory::class
+            Service\UserManager::class =>  Service\Factory\UserManagerFactory::class,
+            Service\AuthManager::class =>  Service\Factory\AuthManagerFactory::class,
+            Service\AuthAdapter::class =>  Service\Factory\AuthAdapterFactory::class,
+            AuthenticationService::class=> Service\Factory\AuthenticationServiceFactory::class
         ]
     ]
 ];
