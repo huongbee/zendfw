@@ -10,7 +10,9 @@
  * control, so do not include passwords or other sensitive information in this
  * file.
  */
-
+use Zend\Session\Validator\HttpUserAgent;
+use Zend\Session\Validator\RemoteAddr;
+use Zend\Session\Storage\SessionArrayStorage;
 return [
     'db'=>[
         'driver'=>'Pdo',
@@ -42,4 +44,17 @@ return [
             ],
         ],
     ],
+    'session_config' => [
+        'cookie_lifetime' => 3600,//1h
+        'gc_maxlifetime'  => 2*3600
+    ],
+    'session_manager'=>[
+        'validators'=>[
+            RemoteAddr::class,
+            HttpUserAgent::class
+        ]
+    ],
+    'session_storage'=>[
+        'type' => SessionArrayStorage::class
+    ]
 ];
