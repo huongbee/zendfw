@@ -4,7 +4,9 @@ $this->headTitle($title);
 ?>
 <h2><?=$title?></h2>
 <div><a  class="btn btn-primary" href="<?=$this->url('user',['action'=>'add'])?>" role="button">Thêm User</a></div>
-<div class="col-md-4 col-md-offset-4"><?=$this->flashMessenger()->render('success',['alert', 'alert-success'])?></div>
+<div class="col-md-4 col-md-offset-4">
+<?=$this->flashMessenger()->render('success',['alert', 'alert-success'])?>
+</div>
 <table class="table table-hover">
     <thead>
         <tr>
