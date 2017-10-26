@@ -6,10 +6,12 @@ class AuthManager{
 
     private $authenticationService;
     private $sessionManager;
+    private $config;
 
-    public function __construct($authenticationService,$sessionManager){
+    public function __construct($authenticationService,$sessionManager,$config){
         $this->authenticationService = $authenticationService;
         $this->sessionManager = $sessionManager;
+        $this->config = $config;
     }
 
     public function login($username, $password, $rememberMe){
@@ -34,6 +36,27 @@ class AuthManager{
         else{
             throw new \Exception('Bạn chưa đăng nhập');
         }
+    }
+
+    public function filterAccess($controllerName, $actionName){
+        if(isset($this->config['controllers'][$controllerName])){
+            $controllers = $this->config['controllers'][$controllerName];
+            foreach($controllers as $controller){
+                $listAction = $controller['actions'];
+                $allow = $controller['allow'];
+                if(in_array($actionName, $listAction)){
+                    if($allow=="all"){
+                        return true; //được phép
+                    }
+                    elseif($allow=="limit" && $this->authenticationService->hasIdentity()){
+                        return true; 
+                    }
+                    else return false;
+                }
+
+            }
+        }
+        return true; 
     }
 }
 
