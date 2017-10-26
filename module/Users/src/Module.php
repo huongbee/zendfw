@@ -3,6 +3,7 @@ namespace Users;
 use Zend\Mvc\MvcEvent;
 use Users\Service\AuthManager;
 use Zend\Mvc\Controller\AbstractActionController;
+use Users\Controller\AuthController;
 
 class Module{
 
@@ -31,11 +32,12 @@ class Module{
         $actionName = $event->getRouteMatch()->getParam('action',null);
 
         $authManager = $event->getApplication()->getServiceManager()->get(AuthManager::class);
-        if(!$authManager->filterAccess($controllerName,$actionName)){
+        if(!$authManager->filterAccess($controllerName,$actionName) || $controllerName != AuthController::class && !$authManager->authenticationService->hasIdentity()){
             //không có quyền
             $controller = $event->getTarget();
             return $controller->redirect()->toRoute('login');
         }
+       
     }
 
 }

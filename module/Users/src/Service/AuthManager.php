@@ -4,7 +4,7 @@ use Zend\Authentication\Result;
 
 class AuthManager{
 
-    private $authenticationService;
+    public $authenticationService;
     private $sessionManager;
     private $config;
 
@@ -53,7 +53,6 @@ class AuthManager{
                     }
                     else return false;
                 }
-
             }
         }
         return true; 

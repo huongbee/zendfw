@@ -29,6 +29,16 @@ return [
                     ]
                 ],
             ],
+            'home' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/',
+                    'defaults' => [
+                        'controller' => Controller\UserController::class,
+                        'action'     => 'index',
+                    ]
+                ],
+            ],
             'setpassword' => [
                 'type'    => Segment::class,
                 'options' => [
